@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شرطة ريسبكت - تحديث مركز العمليات للشرطة</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="intro">
+    <h1>🚔 شرطة ريسبكت</h1>
+    <p>تحديث مركز العمليات للشرطة</p>
+  </div>
+
+  <main id="mainApp">
+    <section class="input-section">
+      <h2>بيانات العمليات</h2>
+      <div class="row">
+        <label>اسم العمليات:</label>
+        <input id="opsName" placeholder="الاسم">
+        <input id="opsCode" placeholder="الكود">
+      </div>
+      <div class="row">
+        <label>النائب مركز العمليات:</label>
+        <input id="deputyName" placeholder="الاسم">
+        <input id="deputyCode" placeholder="الكود">
+      </div>
+
+      <div class="row-group">
+        <div class="row">
+          <label>القيادات:</label>
+          <input id="leaderCode" placeholder="الكود">
+          <button onclick="addLeader()">أضف قيادة</button>
+        </div>
+        <ul id="leadersList"></ul>
+
+        <div class="row">
+          <label>الضباط:</label>
+          <input id="officerCode" placeholder="الكود">
+          <button onclick="addOfficer()">أضف ضابط</button>
+        </div>
+        <ul id="officersList"></ul>
+
+        <div class="row">
+          <label>مسؤول الفترة:</label>
+          <input id="managerName" placeholder="الاسم">
+          <input id="managerCode" placeholder="الكود">
+        </div>
+
+        <div class="row">
+          <label>ضباط الصف:</label>
+          <input id="ncoCode" placeholder="الكود">
+          <button onclick="addNco()">أضف</button>
+        </div>
+        <ul id="ncoList"></ul>
+      </div>
+
+      <h2>توزيع الوحدات</h2>
+      <div id="unitsContainer"></div>
+      <button onclick="addUnit()">إضافة وحدة</button>
+
+      <div class="row time-row">
+        <label>وقت الاستلام:</label><input id="startTime" type="time">
+        <label>وقت التسليم:</label><input id="endTime" type="time">
+        <label>تم التسليم إلى:</label><input id="handoverName" placeholder="الاسم">
+      </div>
+    </section>
+
+    <section class="result-section">
+      <h2>📌 استلام العمليات</h2>
+      <pre id="finalResult" contenteditable="true"></pre>
+    </section>
+
+    <section class="upload-section">
+      <h3>📷 رفع / لصق الصورة</h3>
+      <input type="file" id="imageUpload" accept="image/*">
+      <p class="note">يفضل رفع/لصق صورة عالية الجودة. أحيانًا ستحتاج لتعديل النتائج يدويًا قبل الإرسال.</p>
+      <div id="ocrProgress" class="progress hidden">0%</div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

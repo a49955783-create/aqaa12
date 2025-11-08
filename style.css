@@ -1,0 +1,102 @@
+body {
+  font-family: 'Cairo', sans-serif;
+  background: #121212;
+  color: #eaeaea;
+  margin: 0;
+  padding: 0;
+}
+
+.intro {
+  text-align: center;
+  padding: 2rem;
+  background: #1c1c1c;
+  color: #00ffc6;
+  border-bottom: 2px solid #00ffc6;
+}
+
+main {
+  padding: 1rem;
+  max-width: 700px;
+  margin: auto;
+}
+
+.row, .row-group {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.7rem;
+}
+
+input, select {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  background: #2b2b2b;
+  color: #fff;
+  border-radius: 5px;
+}
+
+button {
+  background: #00ffc6;
+  border: none;
+  color: #000;
+  padding: 7px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.8rem 0;
+}
+
+.result-section {
+  margin-top: 1rem;
+  background: #1e1e1e;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+pre {
+  background: #252525;
+  color: #00ffc6;
+  padding: 1rem;
+  border-radius: 8px;
+  white-space: pre-wrap;
+  overflow: visible;
+}
+
+.upload-section {
+  margin-top: 1.5rem;
+  background: #1c1c1c;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.note {
+  color: #aaa;
+  font-size: 0.9em;
+  margin-top: 0.3rem;
+}
+
+.progress {
+  background: #00ffc6;
+  height: 6px;
+  width: 0%;
+  transition: width 0.3s;
+  border-radius: 4px;
+  margin-top: 0.4rem;
+}
+.hidden { display: none; }
+
+@media (max-width: 600px) {
+  main { padding: 0.5rem; }
+  .row { flex-direction: column; }
+  input, button, select { width: 100%; }
+}
