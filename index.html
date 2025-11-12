@@ -1,84 +1,156 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>شرطة ريسبكت - تحديث مركز العمليات للشرطة</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>شرطة ريسبكت – تحديث مركز العمليات للشرطة (v5.4)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="intro">
-    <h1>🚔 شرطة ريسبكت</h1>
-    <p>تحديث مركز العمليات للشرطة</p>
+  <div id="intro" class="intro-screen" role="dialog" aria-hidden="false">
+    <div class="intro-card">
+      <div class="intro-title">شرطة ريسبكت</div>
+      <div class="intro-sub">تحديث مركز العمليات للشرطة</div>
+    </div>
   </div>
 
-  <main id="mainApp">
-    <section class="input-section">
-      <h2>بيانات العمليات</h2>
-      <div class="row">
-        <label>اسم العمليات:</label>
-        <input id="opsName" placeholder="الاسم">
-        <input id="opsCode" placeholder="الكود">
-      </div>
-      <div class="row">
-        <label>النائب مركز العمليات:</label>
-        <input id="deputyName" placeholder="الاسم">
-        <input id="deputyCode" placeholder="الكود">
-      </div>
+  <header class="topbar" id="topbar" style="display:none"><div class="brand">تحديث مركز العمليات للشرطة</div></header>
 
-      <div class="row-group">
+  <main id="main" class="main-content" style="display:none;opacity:0;">
+    <section class="container">
+      <div class="form">
         <div class="row">
-          <label>القيادات:</label>
-          <input id="leaderCode" placeholder="الكود">
-          <button onclick="addLeader()">أضف قيادة</button>
-        </div>
-        <ul id="leadersList"></ul>
-
-        <div class="row">
-          <label>الضباط:</label>
-          <input id="officerCode" placeholder="الكود">
-          <button onclick="addOfficer()">أضف ضابط</button>
-        </div>
-        <ul id="officersList"></ul>
-
-        <div class="row">
-          <label>مسؤول الفترة:</label>
-          <input id="managerName" placeholder="الاسم">
-          <input id="managerCode" placeholder="الكود">
+          <label>اسم العمليات (الاسم + الكود)</label>
+          <div class="inline">
+            <input id="opsName" class="input large" placeholder="اسم العمليات">
+            <input id="opsCode" class="input small" placeholder="كود العمليات">
+          </div>
         </div>
 
         <div class="row">
-          <label>ضباط الصف:</label>
-          <input id="ncoCode" placeholder="الكود">
-          <button onclick="addNco()">أضف</button>
+          <label>نائب مركز العمليات (الاسم + الكود)</label>
+          <div class="inline">
+            <input id="opsDeputy" class="input large" placeholder="اسم النائب">
+            <input id="opsDeputyCode" class="input small" placeholder="كود النائب">
+          </div>
         </div>
-        <ul id="ncoList"></ul>
-      </div>
 
-      <h2>توزيع الوحدات</h2>
-      <div id="unitsContainer"></div>
-      <button onclick="addUnit()">إضافة وحدة</button>
+        <hr>
 
-      <div class="row time-row">
-        <label>وقت الاستلام:</label><input id="startTime" type="time">
-        <label>وقت التسليم:</label><input id="endTime" type="time">
-        <label>تم التسليم إلى:</label><input id="handoverName" placeholder="الاسم">
+        <div class="groups">
+          <div class="group">
+            <h4>القيادات (كود)</h4>
+            <div id="leaders" class="pills"></div>
+            <div class="inline"><input id="leaderInput" class="input" placeholder="كود القيادة"><button id="addLeaderBtn" class="btn primary">أضف</button></div>
+          </div>
+
+          <div class="group">
+            <h4>الضباط (كود)</h4>
+            <div id="officers" class="pills"></div>
+            <div class="inline"><input id="officerInput" class="input" placeholder="كود الضابط"><button id="addOfficerBtn" class="btn primary">أضف</button></div>
+          </div>
+
+          <div class="group">
+            <h4>مسؤول الفترة (الاسم + الكود)</h4>
+            <div id="managers" class="pills"></div>
+            <div class="inline"><input id="managerName" class="input" placeholder="الاسم"><input id="managerCode" class="input small" placeholder="الكود"><button id="addManagerBtn" class="btn primary">أضف</button></div>
+          </div>
+
+          <div class="group">
+            <h4>ضباط الصف (الاسم + كود)</h4>
+            <div id="ncos" class="pills"></div>
+            <div class="inline"><input id="ncoName" class="input" placeholder="الاسم"><input id="ncoCode" class="input small" placeholder="كود"><button id="addNcoBtn" class="btn primary">أضف</button></div>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="controls">
+          <button id="addUnitRow" class="btn primary">+ إضافة وحدة جديدة</button>
+          <button id="clearUnits" class="btn muted">مسح الأكواد</button>
+          <button id="resetAll" class="btn muted">مسح الكل</button>
+        </div>
+
+        <div class="assign-controls inline" title="الوضع عند الاستخراج">
+          <label>الوضع عند الاستخراج:</label>
+          <select id="assignMode" class="input small">
+            <option value="auto">تلقائي (املأ الخانات الفارغة)</option>
+            <option value="selected">تحديد - وزع على العناصر المحددة</option>
+          </select>
+
+          <label>سلوك الاستخراج:</label>
+          <select id="mergeReplace" class="input small">
+            <option value="merge">دمج</option>
+            <option value="replace">استبدال</option>
+          </select>
+        </div>
+
+        <div id="unitsList" class="units-list" aria-live="polite"></div>
+
+        <div class="times inline" style="margin-top:10px;">
+          <button id="setStartBtn" class="btn muted">تسجيل وقت الاستلام</button>
+          <button id="setEndBtn" class="btn muted">تسجيل وقت التسليم</button>
+          <div class="timeText"><div id="startTimeText"></div><div id="endTimeText"></div></div>
+        </div>
+
+        <div class="result-wrap">
+          <label>النتيجة النهائية (قابلة للتحرير)</label>
+          <div class="result-actions">
+            <button id="copyBtn" class="btn primary">نسخ</button>
+          </div>
+          <div id="resultArea" class="result-area" contenteditable="true" spellcheck="false" aria-live="polite"></div>
+        </div>
       </div>
     </section>
 
-    <section class="result-section">
-      <h2>📌 استلام العمليات</h2>
-      <pre id="finalResult" contenteditable="true"></pre>
-    </section>
-
-    <section class="upload-section">
-      <h3>📷 رفع / لصق الصورة</h3>
-      <input type="file" id="imageUpload" accept="image/*">
-      <p class="note">يفضل رفع/لصق صورة عالية الجودة. أحيانًا ستحتاج لتعديل النتائج يدويًا قبل الإرسال.</p>
-      <div id="ocrProgress" class="progress hidden">0%</div>
+    <section class="container" style="margin-top:12px;">
+      <h3>OCR - رفع / لصق صورة (WebP, JPG, PNG)</h3>
+      <div class="ocr-panel">
+        <div class="ocr-controls inline">
+          <button id="uploadBtn" class="btn primary big">رفع صورة</button>
+          <input id="fileInput" type="file" accept="image/webp,image/png,image/jpeg" style="display:none">
+          <button id="pasteHint" class="btn muted">Ctrl+V للصق صورة</button>
+        </div>
+        <div id="progressWrap" class="progress-wrap" style="display:none;">
+          <div class="progress-bar"><div id="progressFill" style="width:0%"></div></div>
+          <div id="progressText" class="progress-text"></div>
+        </div>
+        <div id="ocrError" class="ocr-error" style="display:none;"></div>
+      </div>
     </section>
   </main>
 
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-top"><h3>تعديل الوحدة</h3><button id="modalClose" class="btn muted">✖</button></div>
+      <div class="modal-body">
+        <label>الكود</label><input id="modalCode" class="input">
+        <label>الحالة</label>
+        <select id="modalStatus" class="input"><option>في الخدمة</option><option>مشغول</option><option>مشغول - اختبار</option><option>مشغول - تدريب</option><option>مشغول حالة موجه 10</option></select>
+        <label>الموقع</label>
+        <select id="modalLocation" class="input"><option value="لا شي">لا شي</option><option>الشمال</option><option>الوسط</option><option>الشرق</option><option>الجنوب</option><option>ساندي</option><option>بوليتو</option></select>
+        <label>النوع</label>
+        <select id="modalType" class="input"><option value="لا شي">لا شي</option><option>سبيد يونت</option><option>دباب</option><option>الهلي</option></select>
+
+        <div id="modalSpeedWrap" style="display:none;">
+          <label>اختيار سبيد يونت</label>
+          <select id="modalSpeed" class="input"><option value="">— اختيار —</option><option>فايبكس</option><option>موتركس</option></select>
+        </div>
+
+        <div id="modalPartnersWrap" style="display:none;">
+          <label>شركاء (كود)</label>
+          <div class="inline"><input id="modalPartnerInput" class="input" placeholder="كود الشريك"><button id="addModalPartner" class="btn primary">+</button></div>
+          <div id="modalPartnersList" class="pills"></div>
+        </div>
+      </div>
+      <div class="modal-actions"><button id="modalSave" class="btn primary">حفظ</button><button id="modalCancel" class="btn muted">إلغاء</button></div>
+    </div>
+  </div>
+
+  <div id="toastWrap" class="toast-wrap" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.1.1/dist/tesseract.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
